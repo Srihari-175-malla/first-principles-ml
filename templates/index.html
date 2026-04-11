@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLScratch - Machine Learning Library From Scratch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="dark-theme">
+  <div class="app-layout">
+    
+    <!-- Top Header -->
+    <header class="navbar">
+      <div class="logo-group">
+        <div class="logo-icon">🧪</div>
+        <div class="logo-title">ML<span class="highlight">Scratch</span> <span class="badge">NumPy First Principles Library</span></div>
+      </div>
+      <nav class="nav-tabs">
+        <button class="nav-btn active" id="tab-btn-bm" onclick="switchNavTab('bm-view')">🏆 Scikit-Learn Benchmarks</button>
+        <button class="nav-btn" id="tab-btn-grad" onclick="switchNavTab('grad-view')">📐 Gradient Checker</button>
+        <button class="nav-btn" id="tab-btn-pca" onclick="switchNavTab('pca-view')">📉 PCA Reconstruction</button>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Theme">🌙</button>
+    </header>
+
+    <!-- Main View Area -->
+    <main class="main-view">
+
+      <!-- VIEW 1: SCIKIT-LEARN VALIDATION BENCHMARKS -->
+      <section id="bm-view" class="view-content active">
+        <div class="card-full">
+          <h2>🏆 Validation Benchmarks vs Scikit-Learn Equivalents</h2>
+          <p>Proves mathematical equivalence of NumPy-from-scratch algorithms against Scikit-Learn on standard datasets.</p>
+
+          <button class="btn primary" style="margin-top: 1rem;" onclick="runValidationBenchmarks()">🚀 Run Full Scikit-Learn Validation Suite</button>
+          <div id="bm-loader" class="loader" style="display:none;">Training custom models & running scikit-learn benchmarks...</div>
+
+          <div class="table-wrapper" style="margin-top: 1.5rem;">
+            <table class="data-table" id="bm-table">
+              <thead>
+                <tr>
+                  <th>ML Algorithm</th>
+                  <th>Metric Name</th>
+                  <th>Custom NumPy Score</th>
+                  <th>Scikit-Learn Score</th>
+                  <th>Discrepancy Gap %</th>
+                  <th>Validation Status</th>
+                </tr>
+              </thead>
+              <tbody><!-- Populated dynamically --></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: GRADIENT CHECKER -->
+      <section id="grad-view" class="view-content">
+        <div class="card-full">
+          <h2>📐 Analytical Backpropagation Gradient Checker</h2>
+          <p>Compares manual backprop analytical gradients $\nabla_{\theta} \mathcal{L}$ with finite difference numerical approximation $\frac{f(\theta+\epsilon) - f(\theta-\epsilon)}{2\epsilon}$.</p>
+
+          <div class="controls-card" style="margin-top: 1rem;">
+            <div class="control-group">
+              <label>Hidden Units:</label>
+              <input type="number" id="hidden-dim-input" value="16" min="4" max="64">
+            </div>
+            <button class="btn primary" onclick="runGradientCheck()">⚡ Run Analytical Gradient Check</button>
+          </div>
+
+          <div id="grad-result-box" class="stat-box" style="margin-top: 1.5rem; text-align: left; display: none;">
+            <div class="stat-num" id="grad-diff-val">0.00e-0</div>
+            <div class="stat-lbl" id="grad-status-lbl">Relative Difference</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: PCA RECONSTRUCTION -->
+      <section id="pca-view" class="view-content">
+        <div class="card-full">
+          <h2>📉 PCA Dimensionality Reduction & Reconstruction</h2>
+          <p>Evaluates explained variance ratio and mean squared reconstruction error $\frac{1}{N} \|\mathbf{X} - \hat{\mathbf{X}}\|^2$ as components vary.</p>
+
+          <div class="controls-card" style="margin-top: 1rem;">
+            <div class="control-group">
+              <label>Principal Components (k):</label>
+              <input type="number" id="pca-comp-input" value="2" min="1" max="10" onchange="runPCAReconstruction()">
+            </div>
+            <button class="btn primary" onclick="runPCAReconstruction()">🚀 Calculate Reconstruction Error</button>
+          </div>
+
+          <div class="metrics-row" style="margin-top: 1.5rem;">
+            <div class="stat-box"><div class="stat-num" id="stat-pca-var">0.0%</div><div class="stat-lbl">Explained Variance Ratio</div></div>
+            <div class="stat-box"><div class="stat-num" id="stat-pca-err">0.0000</div><div class="stat-lbl">MSE Reconstruction Error</div></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
